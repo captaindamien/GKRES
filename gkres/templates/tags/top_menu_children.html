@@ -1,0 +1,7 @@
+{% load base_tags wagtailcore_tags %}
+
+<ul>
+    {% for child in menuitems_children %}
+        <a href="{% pageurl child %}">{{ child.title }}</a><br>
+    {% endfor %}
+</ul>

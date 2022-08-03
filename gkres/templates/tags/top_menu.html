@@ -1,0 +1,36 @@
+{% load base_tags wagtailcore_tags %}
+{% get_site_root as site_root %}
+
+<!-- header 
+================================================== -->
+<header>
+    <a id="header-menu-trigger" href="#0">
+        <span class="header-menu-text">Меню</span>
+        <span class="header-menu-icon"></span>
+    </a> 
+
+    <nav id="menu-nav-wrap">
+        <a href="#0" class="close-button" title="close"><span>Закрыть</span></a>
+
+        <ul class="nav-list">
+            <li><a href="/">Главная</a></li>
+
+            {% for menuitem in menuitems %}
+                {% if menuitem.show_dropdown %}
+                    <li><a href="{% pageurl menuitem %}">{{ menuitem.title }}</a></li>
+                    {% top_menu_children parent=menuitem %}
+                {% else %}
+                    <li><a href="{% pageurl menuitem %}">{{ menuitem.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            <br>
+            <li><a href="https://gkres.so-online.ru/tso/requests">Личный кабинет</a></li>
+            <li><a href="https://gkres.so-online.ru/calculator">Калькулятор стоимости ТП</a></li>
+            <li><a href="http://ri.gkres.so-online.ru/">Раскрытие информации</a></li>
+
+            <br>
+            <li><a href="/admin">Вход для сотрудников</a></li>
+        </ul>
+    </nav>
+</header>
