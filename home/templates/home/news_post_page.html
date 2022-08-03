@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static wagtailcore_tags base_tags %}
+
+{% block head %}
+    <script>
+        document.documentElement.classList.remove('no-js');
+        document.documentElement.classList.add('js');
+    </script>
+
+    <link rel="stylesheet" href="{% static 'css/vendor_2.css' %}"> 
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">  
+{% endblock %}
+
+{% block content %}
+    <div id="page" class="s-pagewrap">
+        <div id="content" class="s-content s-content--blog">
+            <div class="row entry-wrap">
+                <div class="column lg-12">
+                    <article class="entry format-standard">
+                        <div class="entry__header">
+                            <h1 class="entry__title">
+                                {{ page.title }}
+                            </h1>
+
+                            <div class="entry__meta">
+                                <div class="entry__meta-date">
+                                    <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="7.25" stroke="currentColor" stroke-width="1.5"></circle>
+                                        <path stroke="currentColor" stroke-width="1.5" d="M12 8V12L14 14"></path>
+                                    </svg>
+                                    {{ page.created_at }} 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-primary">
+                            <div class="entry__content">
+                                <p>
+                                    {{ page.body }}
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

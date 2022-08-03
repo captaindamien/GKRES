@@ -1,0 +1,19 @@
+{% load wagtailcore_tags %}
+
+<div class="row flex-container">
+    <div id="testimonial-slider" class="flex-slider animate-this">
+        <ul class="slides">
+            {% for contact in contacts %}
+                <li>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <span class="position">{{ contact.employee_post }}</span>
+                            {{ contact.employee_fullname }}<br>
+                            <a href="mailto:{{ contact.employee_contact }}">{{ contact.employee_contact }}</a>
+                        </div>
+                    </div>                 
+                </li>
+            {% endfor %}
+        </ul>
+    </div>        
+</div>

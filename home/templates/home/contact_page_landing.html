@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+    <section id="news_index">
+        <div class="overlay"></div>
+        <div class="gradient-overlay"></div>
+
+        <div class="row narrow section-intro with-bottom-sep animate-this">
+            <div class="col-full">
+                <div class="lead">
+                    <h1>{{ self.thank_you_text|richtext }}</h1>
+                    <p>Вы будете перенаправлены на главную страницу<br>Если это не произошло, нажмите на ссылку ниже</p>
+                    <a href="/">Перейти на главную</a>
+                </div>
+            </div>
+        </div>			
+    </section> 
+{% endblock %}
+
+<!-- {% block js %}
+    <script>
+        setTimeout(function(){
+            window.location.href = '/';
+        }, 5000);
+    </script>
+{% endblock %} -->
