@@ -175,7 +175,6 @@ class NewsPostPage(Page):
             ('imgblock', ImageChooserBlock(label='Изображение', template='blocks/img_block.html')),
         ],
         block_counts={
-            'rtfblock': {'min_num': 1},
             'imgblock': {'max_num': 1},
         },
         verbose_name='Добавление блоков',

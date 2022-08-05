@@ -13,17 +13,10 @@ DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: define the correct hosts in production!
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["gkres.ru", "www.gkres.ru"]
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-    }
-}
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
