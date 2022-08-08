@@ -12,10 +12,15 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import environ
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -27,7 +32,11 @@ INSTALLED_APPS = [
     # подключение приложений
     "home",
     "search",
-
+    
+    # рекапча на форму
+    'captcha',
+    'wagtailcaptcha',
+    
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
@@ -40,6 +49,7 @@ INSTALLED_APPS = [
     "wagtail.admin",
     "wagtail",
     "wagtail.contrib.styleguide",
+    
     # подключение сторонних моделей к админке wagtail
     "wagtail.contrib.modeladmin",
 
@@ -69,11 +79,11 @@ ROOT_URLCONF = "gkres.urls"
 
 DATABASES = {
     'default': {
-        'NAME': 'gkres',
-        'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'postgres',
-        'PASSWORD': '123',
-        'HOST': 'localhost',
+        'NAME': env("NAME"),
+        'ENGINE': env("ENGINE"),
+        'USER': env("USER"),
+        'PASSWORD': env("PASSWORD"),
+        'HOST': env("HOST"),
         'PORT': '',
     }
 }
@@ -178,3 +188,8 @@ WAGTAIL_ENABLE_UPDATE_CHECK = False
 
 # для версии джанго >= 3.2
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+# рекапча
+RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY_V2")
+RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY_V2")
+NOCAPTCHA = True

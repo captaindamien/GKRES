@@ -20,6 +20,10 @@ from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.contrib.forms.forms import FormBuilder
 
+from wagtailcaptcha.models import WagtailCaptchaEmailForm
+from wagtailcaptcha.forms import WagtailCaptchaFormBuilder
+from wagtailcaptcha.models import WagtailCaptchaForm
+
 from modelcluster.fields import ParentalKey
 
 from slugify import slugify
@@ -113,27 +117,6 @@ class HomePage(Page):
         blank=True,
         null=True,
     )
-    org_office = RichTextField(
-        verbose_name='Место нахождения',
-        features=['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul', 'hr', 'bold', 'italic', 'link', 'superscript', 'subscript', 'strikethrough', 'blockquote'],
-        help_text='Введите текст',
-        blank=True,
-        null=True,
-    )
-    org_email = RichTextField(
-        verbose_name='Адреса эл. почты',
-        features=['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul', 'hr', 'bold', 'italic', 'link', 'superscript', 'subscript', 'strikethrough', 'blockquote'],
-        help_text='Введите текст',
-        blank=True,
-        null=True,
-    )
-    org_phone = RichTextField(
-        verbose_name='Номера телефонов',
-        features=['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul', 'hr', 'bold', 'italic', 'link', 'superscript', 'subscript', 'strikethrough', 'blockquote'],
-        help_text='Введите текст',
-        blank=True,
-        null=True,
-    )
 
     # обьявление полей в интерфейсе администратора
     # вкладка содержимое
@@ -141,9 +124,6 @@ class HomePage(Page):
         FieldPanel('about'),
         FieldPanel('service'),
         FieldPanel('social'),
-        FieldPanel('org_office'),
-        FieldPanel('org_email'),
-        FieldPanel('org_phone'),
     ]
 
 
@@ -210,7 +190,7 @@ class FormField(AbstractFormField):
     )
     
 
-class CustomFormBuilder(FormBuilder):
+class CustomFormBuilder(WagtailCaptchaFormBuilder):
     def get_create_field_function(self, type):
         create_field_function = super().get_create_field_function(type)
 
@@ -225,7 +205,7 @@ class CustomFormBuilder(FormBuilder):
         return wrapped_create_field_function
 
 
-class ContactPage(AbstractEmailForm):
+class ContactPage(WagtailCaptchaEmailForm):
     form_builder = CustomFormBuilder
     
     # определение дочерних страниц
@@ -235,14 +215,41 @@ class ContactPage(AbstractEmailForm):
     # максимальное кол-во создаваемых страниц
     max_count = 1
     
-    
     landing_page_template = 'home/contact_page_landing.html',
-    intro = RichTextField(blank=True)
-    thank_you_text = RichTextField(blank=True)
+    
+    intro = RichTextField(
+        verbose_name='Оглавление',
+        blank=True,
+    )
+    thank_you_text = RichTextField(
+        verbose_name='Текст после отправки',
+        blank=True,
+    )
+    org_office = RichTextField(
+        verbose_name='Место нахождения',
+        features=['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul', 'hr', 'bold', 'italic', 'link', 'superscript', 'subscript', 'strikethrough', 'blockquote'],
+        help_text='Введите текст',
+        blank=True,
+        null=True,
+    )
+    org_email = RichTextField(
+        verbose_name='Адреса эл. почты',
+        features=['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul', 'hr', 'bold', 'italic', 'link', 'superscript', 'subscript', 'strikethrough', 'blockquote'],
+        help_text='Введите текст',
+        blank=True,
+        null=True,
+    )
+    org_phone = RichTextField(
+        verbose_name='Номера телефонов',
+        features=['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul', 'hr', 'bold', 'italic', 'link', 'superscript', 'subscript', 'strikethrough', 'blockquote'],
+        help_text='Введите текст',
+        blank=True,
+        null=True,
+    )
 
     content_panels = AbstractEmailForm.content_panels + [
         FieldPanel('intro'),
-        InlinePanel('form_fields', label='Form Fields'),
+        InlinePanel('form_fields', label='Поле формы'),
         FieldPanel('thank_you_text'),
         MultiFieldPanel([
             FieldRowPanel([
@@ -250,7 +257,10 @@ class ContactPage(AbstractEmailForm):
                 FieldPanel('to_address', classname="col6"),
             ]),
             FieldPanel("subject"),
-        ], heading="Email Settings"),
+        ], heading="Настройки Email"),
+        FieldPanel('org_office'),
+        FieldPanel('org_email'),
+        FieldPanel('org_phone'),
     ]
     
     class Meta:
