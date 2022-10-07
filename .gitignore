@@ -133,3 +133,6 @@ migrations/
 
 # MacOS
 .DS_Store
+
+# Media
+/media

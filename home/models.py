@@ -111,7 +111,6 @@ class HomePage(Page):
         null=True,
     )
     social = RichTextField(
-        verbose_name='Социальная ответственность',
         features=['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul', 'hr', 'bold', 'italic', 'link', 'superscript', 'subscript', 'strikethrough', 'blockquote'],
         help_text='Введите текст',
         blank=True,
