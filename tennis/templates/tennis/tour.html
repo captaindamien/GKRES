@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load wagtailcore_tags %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/tour.css' %}">
+{% endblock %}
+
+{% block title %}
+    {{ tour.name }}
+{% endblock %}
+
+{% block content %}
+    <section id="tennis">
+        <div style="margin: 0 auto 20px auto; text-align: center;">
+            <h1 style="margin-bottom: 50px; color: white">{{ tour.name }}</h1>
+        </div>
+
+            {% if games %}
+                {% if not is_mobile %}
+                    <div style="max-width: 1500px; margin: 0 auto;">
+                        <table class="simple-little-table" cellspacing="0">
+                            <tr>
+                                <th>Игроки</th>
+
+                                {% for player in players %}
+                                    <th style="text-align: center;">{{ player }}</th>
+                                {% endfor %}
+
+                                <th>Очки</th>
+                            </tr>
+
+                            {% for key, value in table_pc.items %}
+                                <tr>
+                                    <td>
+                                        {{ key }}
+                                    </td>
+
+                                    {% for v in value %}
+                                        {% if v == '-' %}
+                                            <td style="background: rgba(69, 69, 69, 0.433);"></td>
+                                        {% else %}
+                                            <td style="text-align: center;">
+                                                {{ v }}
+                                            </td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                {% else %}
+                    {% for key, value in table_mobile.items %}
+                        <div style="max-width: 1400px; margin: 0 auto;">
+                            <table class="simple-little-table" cellspacing="0">
+                                <tr>
+                                    <th>Игроки</th>
+                                    <th style="text-align: center;">{{ key }}</th>
+                                </tr>
+
+                                {% for v in value %}
+                                    <tr>
+                                        <td>
+                                            {{ v.0 }}
+                                        </td>
+                                        <td>
+                                            {{ v.1 }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% else %}
+                <div style="margin: 0 auto 20px auto; text-align: center;">
+                    <h1 style="margin-top: 200px; color: rgb(179, 76, 76)">Игры еще не назначены</h1>
+                </div>
+            {% endif %}
+    </section>
+
+    {% if games %}
+        <section id="testimonials">
+            <div class="row">
+                <div class="col-twelve">
+                    <h2>Предстоящие игры</h2>
+                </div>   		
+            </div>   	
+            <div class="row flex-container">
+                <div id="testimonial-slider" class="flex-slider animate-this">
+                    <ul class="slides">
+                        {% for game in games %}
+                            {% if game.date and game.player_one_score == 0 and game.player_two_score == 0 %}
+                                <li>
+                                    <div class="testimonial-author">
+                                        <div class="author-info">
+                                            <span class="position">
+                                                На этой неделе
+                                            </span>
+                                            {{ game.player_one }} - {{ game.player_two }}
+                                            <br>
+                                        </div>
+                                    </div>                 
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>        
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}
