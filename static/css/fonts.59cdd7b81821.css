@@ -1,0 +1,42 @@
+/* ===================================================================
+ * fonts.scss)
+ *
+ * ------------------------------------------------------------------- */
+ 
+/*
+ * Libre Baskerville 
+================================================================================ */
+@font-face {
+  font-family: "librebaskerville-regular";
+  src: url("../fonts/librebaskerville/librebaskerville-regular-webfont.520ff79ac50e.woff2") format("woff2"), url("../fonts/librebaskerville/librebaskerville-regular-webfont.c1d1c75cc10d.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "librebaskerville-italic";
+  src: url("../fonts/librebaskerville/librebaskerville-italic-webfont.4ba92be4076c.woff2") format("woff2"), url("../fonts/librebaskerville/librebaskerville-italic-webfont.70e8ec15e18a.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "librebaskerville-bold";
+  src: url("../fonts/librebaskerville/librebaskerville-bold-webfont.1c87f16b386b.woff2") format("woff2"), url("../fonts/librebaskerville/librebaskerville-bold-webfont.c4711930c3a7.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+
+/*
+ * Montserrat
+================================================================================ */
+@font-face {
+  font-family: "montserrat-regular";
+  src: url("../fonts/montserrat/montserrat-regular-webfont.0891dad6bdd1.woff2") format("woff2"), url("../fonts/montserrat/montserrat-regular-webfont.fa6c61d2daa7.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "montserrat-bold";
+  src: url("../fonts/montserrat/montserrat-bold-webfont.34fac8b61be1.woff2") format("woff2"), url("../fonts/montserrat/montserrat-bold-webfont.b019c4fcda18.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}

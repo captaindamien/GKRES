@@ -62,6 +62,15 @@ class Games(models.Model):
     player_one_score = models.IntegerField(
         default = 0
     )
+    player_one_set_1 = models.IntegerField(
+	default = 0
+    )
+    player_one_set_2 = models.IntegerField(
+        default = 0
+    )
+    player_one_tie = models.IntegerField(
+        default = 0
+    )
     player_two = models.CharField(
         max_length = 100,
         blank = False,
@@ -69,6 +78,15 @@ class Games(models.Model):
         default = '-'
     )
     player_two_score = models.IntegerField(
+        default = 0
+    )
+    player_two_set_1 = models.IntegerField(
+        default = 0
+    )
+    player_two_set_2 = models.IntegerField(
+        default = 0
+    )
+    player_two_tie = models.IntegerField(
         default = 0
     )
 

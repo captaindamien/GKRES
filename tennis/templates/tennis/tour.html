@@ -12,6 +12,7 @@
 
 {% block content %}
     <section id="tennis">
+	<div class="tennis_bg"></div>
         <div style="margin: 0 auto 20px auto; text-align: center;">
             <h1 style="margin-bottom: 50px; color: white">{{ tour.name }}</h1>
         </div>
@@ -39,6 +40,8 @@
                                     {% for v in value %}
                                         {% if v == '-' %}
                                             <td style="background: rgba(69, 69, 69, 0.433);"></td>
+					{% elif v == '0 - 0' %}
+					    <td> - </td>
                                         {% else %}
                                             <td style="text-align: center;">
                                                 {{ v }}
