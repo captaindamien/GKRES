@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     # подключение приложений
     "home",
     "search",
+    "contracts",
+    "tennis",
     
     # рекапча на форму
     'captcha',
@@ -79,11 +81,11 @@ ROOT_URLCONF = "gkres.urls"
 
 DATABASES = {
     'default': {
-        'NAME': env("NAME"),
-        'ENGINE': env("ENGINE"),
-        'USER': env("USER"),
-        'PASSWORD': env("PASSWORD"),
-        'HOST': env("HOST"),
+        'NAME': 'gkres',
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER': 'postgres',
+        'PASSWORD': '123',
+        'HOST': 'localhost',
         'PORT': '',
     }
 }

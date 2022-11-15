@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load wagtailcore_tags %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/tournaments.css' %}">
+{% endblock %}
+
+{% block title %}
+    Список турниров
+{% endblock %}
+
+{% block content %}
+    <section id="tennis">
+        <div class="overlay"></div>
+        <div class="gradient-overlay"></div>
+
+        <div class="row narrow section-intro with-bottom-sep animate-this">
+            <div class="col-full">
+                <div class="lead">
+                    <h1>Список турниров по теннису</h1>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row tennis-content">
+            <div class="tennis-list block-1-2 block-tab-full group">
+                {% for tour in tours %}
+                    <div class="bgrid service-item animate-this">
+                        <a class="" href="{% url 'tennis:tournament' tour.pk %}">
+                            <span class="icon">
+                                <i class="icon-trophy"></i>
+                            </span>	              
+                            <div class="service-content border-block">
+                                <h3 class="h05">{{ tour.name }}</h3>
+                                <p>Формат сетки: {{ tour.tour_format }}</p>
+                                {% if tour.is_end is not None %}
+                                    {% if now|date:'dmy' < tour.date|date:'dmy' %}
+                                        <p style="color: rgb(245, 182, 171)">Начнется {{ tour.date }}</p>
+                                    {% else %}
+                                        <p style="color: rgb(218, 245, 171)">Проходит в данный момент</p>
+                                    {% endif %}
+                                {% else %}
+                                    <p style="color: rgb(245, 182, 171)">Турнир окончен!</p>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>                                
+{% endblock %}
