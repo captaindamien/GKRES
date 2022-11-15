@@ -135,4 +135,4 @@ migrations/
 .DS_Store
 
 # Media
-media/
+media/*
