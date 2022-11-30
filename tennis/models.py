@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 
-from django.db.models.signals import m2m_changed
+from django.db.models.signals import m2m_changed, post_save
 from django.dispatch import receiver
 
 
@@ -32,6 +32,25 @@ class Tournaments(models.Model):
         verbose_name = 'Формат проведения',
         default = 'круговая',
     )
+    win_score = models.IntegerField(
+        null = False,
+        blank = False,
+        default = 1,
+        verbose_name = 'Количество очков за победу'
+    )
+    lose_score = models.IntegerField(
+        null = False,
+        blank = False,
+        default = 0,
+        verbose_name = 'Количество очков за поражение не в 0',
+        help_text = 'Оставить 0 при стандартном ведении счета'
+    )
+    image = models.ImageField(
+        upload_to = 'images/',
+        blank = True,
+        null = True,
+        verbose_name = 'Изображение для окончания турнира'
+    )
     is_end = models.BooleanField(
         default = False,
         verbose_name = 'Закончился турнир?'
@@ -59,36 +78,38 @@ class Games(models.Model):
         verbose_name = 'Первый игрок',
         default = '-'
     )
-    player_one_score = models.IntegerField(
-        default = 0
-    )
-    player_one_set_1 = models.IntegerField(
-	default = 0
-    )
-    player_one_set_2 = models.IntegerField(
-        default = 0
-    )
-    player_one_tie = models.IntegerField(
-        default = 0
-    )
     player_two = models.CharField(
         max_length = 100,
         blank = False,
         verbose_name = 'Второй игрок',
         default = '-'
     )
+    player_one_score = models.IntegerField(
+        default = 0,
+        blank = False,
+        null = False,
+        verbose_name = f'Результат первого игрока'
+    )
     player_two_score = models.IntegerField(
-        default = 0
+        default = 0,
+        blank = False,
+        null = False,
+        verbose_name = 'Результат второго игрока'
     )
-    player_two_set_1 = models.IntegerField(
-        default = 0
+    set_statistic = models.CharField(
+        max_length = 100,
+        default = '0/0, 0/0',
+        blank = False,
+        null = False,
+        verbose_name = 'Счет по геймам'
     )
-    player_two_set_2 = models.IntegerField(
-        default = 0
-    )
-    player_two_tie = models.IntegerField(
-        default = 0
-    )
+    
+    class Meta:
+        verbose_name = f'Игра'
+        verbose_name_plural = f'Игры'  
+        
+    def __str__(self):
+        return f'Игра(ы) №{self.pk}'  
 
 
 class Players(models.Model):
@@ -120,6 +141,6 @@ def create_games(sender, instance, **kwargs):
             player_one = game[0],
             player_two = game[1],
         )
+    
 
-
-m2m_changed.connect(create_games, sender=Tournaments.players.through)  
+m2m_changed.connect(create_games, sender=Tournaments.players.through)

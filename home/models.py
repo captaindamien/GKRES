@@ -224,22 +224,8 @@ class ContactPage(WagtailCaptchaEmailForm):
         verbose_name='Текст после отправки',
         blank=True,
     )
-    org_office = RichTextField(
+    contacts = RichTextField(
         verbose_name='Место нахождения',
-        features=['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul', 'hr', 'bold', 'italic', 'link', 'superscript', 'subscript', 'strikethrough', 'blockquote'],
-        help_text='Введите текст',
-        blank=True,
-        null=True,
-    )
-    org_email = RichTextField(
-        verbose_name='Адреса эл. почты',
-        features=['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul', 'hr', 'bold', 'italic', 'link', 'superscript', 'subscript', 'strikethrough', 'blockquote'],
-        help_text='Введите текст',
-        blank=True,
-        null=True,
-    )
-    org_phone = RichTextField(
-        verbose_name='Номера телефонов',
         features=['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul', 'hr', 'bold', 'italic', 'link', 'superscript', 'subscript', 'strikethrough', 'blockquote'],
         help_text='Введите текст',
         blank=True,
@@ -257,9 +243,7 @@ class ContactPage(WagtailCaptchaEmailForm):
             ]),
             FieldPanel("subject"),
         ], heading="Настройки Email"),
-        FieldPanel('org_office'),
-        FieldPanel('org_email'),
-        FieldPanel('org_phone'),
+        FieldPanel('contacts'),
     ]
     
     class Meta:

@@ -19,7 +19,7 @@ html, body {
 }
 .tennis_bg {
     z-index: -1;
-    background-image: url(../images/tour_bg4.jpg);
+    background-image: url(../images/tour_bg4.webp);
     position: fixed;
     display: block;
     top: 0;

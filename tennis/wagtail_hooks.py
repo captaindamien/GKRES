@@ -20,7 +20,12 @@ class TournamentsAdmin(ModelAdmin):
     
 
 class GamesAdmin(ModelAdmin):
-    model = Games 
+    model = Games
+    fields = (
+        'tournament',
+        'date',
+        ('player_one', 'player_two')
+    )
     menu_label = "Игры"  
     menu_icon = "table" 
     menu_order = 200 

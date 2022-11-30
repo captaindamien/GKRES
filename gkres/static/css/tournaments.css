@@ -4,7 +4,7 @@
  * ------------------------------------------------------------------- */
  #tennis {
     background-color: #19191b;
-    background: url(../images/tennis_bg.jpeg) no-repeat center center fixed;
+    background: url(../images/tennis_bg.webp) no-repeat center center fixed;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
