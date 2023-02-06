@@ -2995,3 +2995,37 @@ footer h4.h05::after {
     display: none;
   }
 }
+
+.disc-nav-toggle {
+  margin: 0;
+  font-family: "montserrat-regular", sans-serif;
+  list-style: none;
+  line-height: 3.6rem;
+}
+
+.disc-nav-toggle li {
+  display: none;
+}
+
+.disc-nav-toggle.open li {
+  display: list-item;
+}
+
+.lk-nav-toggle {
+  margin: 0;
+  font-family: "montserrat-regular", sans-serif;
+  list-style: none;
+  line-height: 3.6rem;
+}
+
+.lk-nav-toggle li {
+  display: none;
+}
+
+.lk-nav-toggle.open li {
+  display: list-item;
+}
+
+
+
+

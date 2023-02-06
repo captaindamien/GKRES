@@ -174,13 +174,13 @@
 			menuTrigger.trigger('click');	
 		});
 
-		// close menu clicking outside the menu itself
-		siteBody.on('click', function(e){		
-			if( !$(e.target).is('#menu-nav-wrap, #header-menu-trigger, #header-menu-trigger span') ) {
-				menuTrigger.removeClass('is-clicked');
-				siteBody.removeClass('menu-is-open');
-			}
-		});
+		// // close menu clicking outside the menu itself
+		// siteBody.on('click', function(e){		
+		// 	if( !$(e.target).is('#menu-nav-wrap, #header-menu-trigger, #header-menu-trigger span') ) {
+		// 		menuTrigger.removeClass('is-clicked');
+		// 		siteBody.removeClass('menu-is-open');
+		// 	}
+		// });
 
    };
 

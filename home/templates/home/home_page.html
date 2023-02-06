@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% load static wagtailcore_tags wagtailimages_tags base_tags %}
 
+{% block head %}
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+{% endblock %}
+
 {% block content %}
     <section id="home">
         <div class="overlay"></div>
@@ -20,7 +26,7 @@
         </div>
 
         <div class="scrolldown">
-            <a href="#about" class="scroll-icon smoothscroll">
+            <a href="#services" class="scroll-icon smoothscroll">
                 Прокрутите вниз
                 <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
             </a>
@@ -28,107 +34,181 @@
 
         <ul class="home-social-list">
             <li class="animate-intro">
-                <a class="smoothscroll" href="#services"><i class="fa fa-book"></i><span style="padding-left: 10px; font-size: 2rem;">услуги</span></a>
+                <a class="smoothscroll" href="#services"><i class="fa fa-bullhorn"></i><span style="padding-left: 10px; font-size: 2rem;">услуги</span></a>
             </li>
-            <li class="animate-intro">
-                <a class="smoothscroll" href="#portfolio"><i class="fa fa-bullhorn"></i><span style="padding-left: 10px; font-size: 2rem;">соц. ответственность</span></a>
-            </li>
+            {% if page.slides %}
+                <li class="animate-intro">
+                    <a class="smoothscroll" href="#carousel-generic"><i class="fa fa-book"></i><span style="padding-left: 10px; font-size: 2rem;">буклет компании</span></a>
+                </li>
+            {% endif %}
             <li class="animate-intro">
                 <a href="{% slugurl 'contacts' %}"><i class="fa fa-address-book"></i><span style="padding-left: 10px; font-size: 2rem;">контакты</span></a>
-            </li>     
+            </li>
+            {% if page.ya_map %} 
+                <li class="animate-intro">
+                    <a class="smoothscroll" href="#map"><i class="fa fa-map-marker"></i><span style="padding-left: 20px; font-size: 2rem;">карта</span></a>
+                </li>
+            {% endif %}
          </ul>	
     </section>
 
-    <section id="about">
-        <div class="row about-wrap">
-            <div class="col-full">
-                <div class="about-profile-bg"></div>
-                    <div class="intro">
-                        <div class="lead animate-this">
-                            <p>{{ page.about|richtext }}</p>
-                        </div>
-                    </div>   
+    {% if page.about %}
+        <section id="about">
+            <div class="row about-wrap">
+                <div class="col-full">
+                    <div class="about-profile-bg"></div>
+                        <div class="intro">
+                            <div class="lead animate-this">
+                                <p>{{ page.about|richtext }}</p>
+                            </div>
+                        </div>   
+                    </div>
+                </div>
+        </section>
+    {% endif %}
+    
+    {% if page.service %}
+        <section id="services">
+            <div class="overlay"></div>
+            <div class="gradient-overlay"></div>
+
+            <div class="row narrow section-intro with-bottom-sep animate-this">
+                <div class="col-full">
+                    <div class="lead">
+                        <p>{{ page.service|richtext }}</p>
+                    </div>
+
                 </div>
             </div>
-    </section>
 
-    <section id="services">
-        <div class="overlay"></div>
-        <div class="gradient-overlay"></div>
+            <div class="row services-content">
+                <div class="services-list block-1-2 block-tab-full group">
+                    <div class="bgrid service-item animate-this">
+                        <span class="icon">
+                            <i class="icon-user"></i>
+                        </span>	              
+                        <div class="service-content">
+                            <h3 class="h05">Личный кабинет Магадан</h3>
+                            <a href="https://gkres.so-online.ru/">перейти в раздел</a>
+                        </div>                
+                    </div>
 
-        <div class="row narrow section-intro with-bottom-sep animate-this">
-            <div class="col-full">
-                <div class="lead">
-                    <p>{{ page.service|richtext }}</p>
+                    <div class="bgrid service-item animate-this">
+                        <span class="icon">
+                            <i class="icon-user"></i>
+                        </span>	              
+                        <div class="service-content">
+                            <h3 class="h05">Личный кабинет Сов. Гавань</h3>
+                            <a href="https://gkres-sg.so-online.ru/">перейти в раздел</a>
+                        </div>                
+                    </div>
+
+                    <div class="bgrid service-item animate-this">	
+                        <span class="icon">
+                            <i class="icon-notes"></i>
+                        </span>            
+                        <div class="service-content">
+                            <h3 class="h05">Калькулятор стоимости ТП</h3>
+                            <a href="http://calc.gkres.so-online.ru/">перейти в раздел</a>
+                        </div> 	         	 
+                    </div>
+
+                    <div class="bgrid service-item animate-this">	
+                        <span class="icon">
+                            <i class="icon-notes"></i>
+                        </span>            
+                        <div class="service-content">
+                            <h3 class="h05">Схемы сетевого комплекса</h3>
+                            <a href="https://disk.yandex.ru/d/S2bEqAkbTwrNmA">перейти в раздел</a>
+                        </div> 	         	 
+                    </div>
+
+                    <div class="bgrid service-item animate-this">	
+                        <span class="icon">
+                            <i class="icon-sliders"></i>
+                        </span>                          
+                        <div class="service-content">	
+                            <h3 class="h05">Раскрытие информации Магадан</h3>  
+                            <a href="http://ri.gkres.so-online.ru">перейти в раздел</a>	         		
+                        </div>	                          
+                    </div>
+
+                    <div class="bgrid service-item animate-this">
+                        <span class="icon">
+                            <i class="icon-sliders"></i>
+                        </span>		            
+                        <div class="service-content">
+                            <h3 class="h05">Раскрытие информации Сов. Гавань</h3>
+                            <a href="{% slugurl 'khabarovskii-krai' %}">Перейти в раздел</a>
+                        </div> 	            	               
+                    </div> 
                 </div>
+            </div> 			
+        </section>
+    {% endif %}
 
+    {% if page.slides %}
+        <div id="carousel-generic" class="carousel slide" data-ride="carousel" data-interval="10000">
+            <ol class="carousel-indicators">
+                {% for slide in page.slides.all %}
+                    <li data-target="#carousel-generic" data-slide-to="{{ slide.caption }}" {% if slide.caption == '1' %} class="active" {% endif %}></li>
+                {% endfor %}
+            </ol>
+
+            <div class="carousel-inner" role="listbox">
+                {% for slide in page.slides.all %}
+                    {% image slide.slide_image original as slide_img %}
+                    <div class="item{% if slide.caption == '1' %} active {% endif %}" style="background-color:#000;">
+                        <img style="width: 100%; height: 100%;" src="{{ slide_img.url }}" alt="">
+                    </div>
+                {% endfor %}
             </div>
+
+            <a class="left carousel-control" href="#carousel-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Сюда</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Туда</span>
+            </a>
         </div>
 
-        <div class="row services-content">
-            <div class="services-list block-1-2 block-tab-full group">
-                <div class="bgrid service-item animate-this">
-                    <span class="icon">
-                        <i class="icon-user"></i>
-                    </span>	              
-                    <div class="service-content">
-                        <h3 class="h05">Личный кабинет</h3>
-                        <a href="https://gkres.so-online.ru/">перейти в раздел</a>
-                    </div>                
-                </div>
-
-                <div class="bgrid service-item animate-this">	
-                    <span class="icon">
-                        <i class="icon-notes"></i>
-                    </span>            
-                    <div class="service-content">
-                        <h3 class="h05">Калькулятор стоимости ТП</h3>
-                        <a href="http://calc.gkres.so-online.ru/">перейти в раздел</a>
-                    </div> 	         	 
-                </div>
-
-                <div class="bgrid service-item animate-this">	
-                    <span class="icon">
-                        <i class="icon-sliders"></i>
-                    </span>                          
-                    <div class="service-content">	
-                        <h3 class="h05">Раскрытие информации Магадан</h3>  
-                        <a href="http://ri.gkres.so-online.ru">перейти в раздел</a>	         		
-                    </div>	                          
-                </div>
-
-                <div class="bgrid service-item animate-this">
-                    <span class="icon">
-                        <i class="icon-sliders"></i>
-                    </span>		            
-                    <div class="service-content">
-                        <h3 class="h05">Раскрытие информации Советская Гавань</h3>
-                        <a href="{% slugurl 'khabarovskii-krai' %}">Перейти в раздел</a>
-                    </div> 	            	               
-                </div> 
-            </div>
-        </div> 			
-    </section>
-
-<section id="portfolio">
-    <div class="intro-wrap">
-        <div class="row narrow section-intro with-bottom-sep animate-this">
-            <div class="col-twelve">
-                <div class="lead">
-                    <p>{{ page.social|richtext }}</p>
-                </div> 				   			
-            </div>   		
-        </div>  		
-    </div>  	
-
-    <section id="testimonials">
-        <div class="row">
-            <div class="col-twelve">
-                <h2 class="animate-this">Контакты</h2>
-            </div>   		
-        </div>   	
-        {% contacts_tag %}
-    </section>
+        {% if page.book %}
+            <p style="text-align: center; margin: 0"><a href="{{ page.book.url }}" style="font-weight: 900;">ПОСМОТРЕТЬ ОРИГИНАЛ БУКЛЕТА</a></p>
+        {% endif %}
+    {% endif %}
+    
+    {% if page.ya_map %}
+        <div id="map">
+            <script type="text/javascript" charset="utf-8" async src="{{ page.ya_map|safe }}"></script>
+        </div>
+    {% endif %}
+    
+    {% if page.social %}
+        <section id="portfolio">
+            <div class="intro-wrap">
+                <div class="row narrow section-intro with-bottom-sep animate-this">
+                    <div class="col-twelve">
+                        <div class="lead">
+                            <p>{{ page.social|richtext }}</p>
+                        </div> 				   			
+                    </div>   		
+                </div>  		
+            </div> 
+        </section>
+    {% endif %}
+    
+    {% if contacts_tag %}
+        <section id="testimonials">
+            <div class="row">
+                <div class="col-twelve">
+                    <h2 class="animate-this">Контакты</h2>
+                </div>   		
+            </div>   	
+            {% contacts_tag %}
+        </section>
+    {% endif %}
 
     {% footer_tag %}
 {% endblock %}

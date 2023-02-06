@@ -89,6 +89,28 @@ class Contacts(models.Model):
         return self.employee_fullname
 
 
+class HomeSlider(Orderable):
+    slider = ParentalKey(
+        'HomePage',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name='slides',
+    )
+    caption = models.CharField(
+        max_length=200,
+        verbose_name='Текст слайда',
+    )
+    slide_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Изображение слайда',
+    )
+
+
 class HomePage(Page):
     # определение дочерних страниц
     subpage_types = ['NewsIndexPage', 'NewsPostPage', 'ContactPage']
@@ -115,6 +137,20 @@ class HomePage(Page):
         help_text='Введите текст',
         blank=True,
         null=True,
+        verbose_name = 'Социальная ответственность'
+    )
+    book = models.FileField(
+        upload_to = 'documents/',
+        blank = True,
+        null = True,
+        verbose_name = 'Буклет'
+    )
+    ya_map = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name='Ссылка на Яндекс карту',
+        help_text='Вставлять только src (убрать width обязательно!)'
     )
 
     # обьявление полей в интерфейсе администратора
@@ -123,6 +159,12 @@ class HomePage(Page):
         FieldPanel('about'),
         FieldPanel('service'),
         FieldPanel('social'),
+        MultiFieldPanel(
+            [InlinePanel('slides'),],
+            heading='Слайды',
+        ),
+        FieldPanel('book'),
+        FieldPanel('ya_map')
     ]
 
 

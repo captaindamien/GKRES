@@ -32,8 +32,8 @@ INSTALLED_APPS = [
     # подключение приложений
     "home",
     "search",
-    "contracts",
     "tennis",
+    "auto_penalty",
     
     # рекапча на форму
     'captcha',

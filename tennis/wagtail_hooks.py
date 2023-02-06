@@ -1,7 +1,7 @@
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, 
-    ModelAdminGroup, 
-    modeladmin_register 
+    ModelAdminGroup,
+    modeladmin_register
 )
 
 from .models import Tournaments, Games, Players
@@ -42,7 +42,7 @@ class PlayersAdmin(ModelAdmin):
     menu_icon = "group" 
     menu_order = 200 
     add_to_settings_menu = False 
-    exclude_from_explorer = False 
+    exclude_from_explorer = False    
 
 
 class TennisGroup(ModelAdminGroup):

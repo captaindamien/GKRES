@@ -3,6 +3,23 @@
 
 <!-- header 
 ================================================== -->
+{% block head %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <script>
+        $(function(){
+            $('.disc-toggle').click(function(){
+                $('.disc-nav-toggle').toggleClass('open', 1000, "easeOutSine" );
+            });
+            $('.lk-toggle').click(function(){
+                $('.lk-nav-toggle').toggleClass('open', 1000, "easeOutSine" );
+            });
+        });
+    </script>
+{% endblock %}
+
 <header>
     <a id="header-menu-trigger" href="#0">
         <span class="header-menu-text">Меню</span>
@@ -28,27 +45,52 @@
                 {% endif %}
             {% endfor %}
 	    
-	    <br>
-            <li style="color: rgb(186, 186, 186)">Раскрытие информации</li>
-		    <li>
-                <a href="http://ri.gkres.so-online.ru/">
-                <span class="icon">
-                        &nbsp;&nbsp;
-                        <i class="icon-tag">&nbsp;</i>
+	        <br>
+
+            <li style="color: rgb(186, 186, 186)"><a href="##" class="disc-toggle">Раскрытие информации</a></li>
+            <ul class="disc-nav-toggle">
+                <li>
+                    <a href="http://ri.gkres.so-online.ru/">
+                    <span class="icon">
+                            &nbsp;&nbsp;
+                            <i class="icon-tag">&nbsp;</i>
+                        </span>
+                    Магадан
+                    </a>
+                </li>
+                <li>
+                    <a href="https://gkres-sg.so-online.ru/disclosure">
+                    <span class="icon">
+                            &nbsp;&nbsp;
+                            <i class="icon-tag">&nbsp;</i>
                     </span>
-                Магадан
-                </a>
-        	</li>
-        	<li>
-                <a href="https://gkres.ru/khabarovskii-krai/">
-                <span class="icon">
-                        &nbsp;&nbsp;
-                        <i class="icon-tag">&nbsp;</i>
-                </span>
-                Хабаровский край
-                </a>
-        	</li>
-            <li><a href="https://gkres.so-online.ru/tso/requests">Личный кабинет</a></li>
+                    Хабаровский край
+                    </a>
+                </li>
+            </ul>
+
+            <li style="color: rgb(186, 186, 186)"><a href="##" class="lk-toggle">Личные кабинеты</a></li>
+            <ul class="lk-nav-toggle">
+                <li>
+                    <a href="https://gkres.so-online.ru/tso/requests">
+                    <span class="icon">
+                            &nbsp;&nbsp;
+                            <i class="icon-tag">&nbsp;</i>
+                        </span>
+                    Магадан
+                    </a>
+                </li>
+                <li>
+                    <a href="https://gkres-sg.so-online.ru/">
+                    <span class="icon">
+                            &nbsp;&nbsp;
+                            <i class="icon-tag">&nbsp;</i>
+                    </span>
+                    Хабаровский край
+                    </a>
+                </li>
+            </ul>
+
             <li><a href="https://gkres.so-online.ru/calculator">Калькулятор стоимости ТП</a></li>
             <li><a href="https://disk.yandex.ru/d/S2bEqAkbTwrNmA">Схемы сетевого комплекса</a></li>
             
@@ -65,9 +107,8 @@
             {% endif %}
 
             <br>
-            <li><a href="/admin">Вход для сотрудников</a></li>
-	    <br>
-	    <li><a href="http://old.gkres.ru">Старая версия сайта</a></li>
+            
+            <li><a href="http://old.gkres.ru">Старая версия сайта</a></li>
         </ul>
     </nav>
 </header>

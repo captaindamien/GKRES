@@ -3201,7 +3201,7 @@ img.u-pull-left {
     min-height     : 100%;
     overflow       : hidden;
     position       : relative;
-    background: linear-gradient(45deg, rgb(255, 255, 255), rgba(0, 0, 0, 0.24));
+    background: linear-gradient(45deg, rgb(255, 255, 255), rgba(210, 208, 208, 0.24));
 }
 
 

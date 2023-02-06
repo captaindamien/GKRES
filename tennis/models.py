@@ -55,6 +55,24 @@ class Tournaments(models.Model):
         default = False,
         verbose_name = 'Закончился турнир?'
     )
+    f_place = models.CharField(
+        max_length=200,
+        null = True,
+        blank = True,
+        verbose_name='Первое место'
+    )
+    s_place = models.CharField(
+        max_length=200,
+        null = True,
+        blank = True,
+        verbose_name='Второе место'
+    )
+    th_place = models.CharField(
+        max_length=200,
+        null = True,
+        blank = True,
+        verbose_name='Третье место место'
+    )
     
     def __str__(self):
         return self.name  
