@@ -1,21 +1,18 @@
 from email.policy import default
-import imp
 from re import template
 from tabnanny import verbose
 from django.db import models
 from datetime import date
 
 from wagtail.models import Page, Orderable
-from wagtail.admin.edit_handlers import FieldPanel, FieldRowPanel, StreamFieldPanel, MultiFieldPanel, InlinePanel
-from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.core.fields import RichTextField, StreamField
+from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel, InlinePanel
+from wagtail.fields import RichTextField, StreamField
 
-from wagtail.core.blocks import RichTextBlock
+from wagtail.blocks import RichTextBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 
 from wagtail.snippets.models import register_snippet
-from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.contrib.forms.forms import FormBuilder
@@ -87,8 +84,82 @@ class Contacts(models.Model):
     
     def __str__(self):
         return self.employee_fullname
+    
+
+class Region(Orderable):
+    region = ParentalKey(
+        'MainPage',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name='regions',
+    )
+    reg_id = models.CharField(
+        max_length=25,
+        blank=False,
+        null=False,
+        verbose_name='ID региона',
+        help_text='ID строго по списку'
+    )
+    reg_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Изображение региона',
+    )
+    reg_link = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True,
+        verbose_name='Ссылка',
+    )
+    reg_desc = RichTextField(
+        verbose_name='Описание региона',
+        features=['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul', 'hr', 'bold', 'italic', 'link', 'superscript', 'subscript', 'strikethrough', 'blockquote'],
+        help_text='Введите текст',
+        blank=True,
+        null=True,
+    )
+    ya_map = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name='Ссылка на Яндекс карту',
+        help_text='Вставлять только src (убрать width обязательно!)'
+    )
 
 
+class MainPage(Page):
+    subpage_types = ['HomePage']
+    max_count = 1
+    
+    main_title = RichTextField(
+        verbose_name='Заглавный текст страницы',
+        features=['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul', 'hr', 'bold', 'italic', 'link', 'superscript', 'subscript', 'strikethrough', 'blockquote'],
+        help_text='Введите текст',
+        blank=True,
+        null=True,
+    )
+    region_title = models.CharField(
+        max_length=200,
+        verbose_name='Заголовок региона',
+    )
+    
+    content_panels = Page.content_panels + [
+        FieldPanel('main_title'),
+        FieldPanel('region_title'),
+        MultiFieldPanel(
+            [
+                InlinePanel('regions'),
+            ],
+            heading='Добавление региона',
+        ),
+    ]
+    
+    
+# Слайдер для Главной страницы
 class HomeSlider(Orderable):
     slider = ParentalKey(
         'HomePage',
@@ -109,13 +180,54 @@ class HomeSlider(Orderable):
         related_name='+',
         verbose_name='Изображение слайда',
     )
+    
+
+# Orderable группа полей для Главной страницы
+class HomeService(Orderable):
+    block_size = models.BooleanField(
+        default=True,
+        verbose_name='Большой блок?',
+    )
+    service = ParentalKey(
+        'HomePage',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name='services',
+    )
+    title = models.CharField(
+        max_length=200,
+        verbose_name='Название услуги',
+    )
+    icon = models.CharField(
+        max_length=50,
+        verbose_name='Название иконки',
+        help_text='Можно вставлять fa-fa и micons',
+        blank=True,
+        null=True,
+    )
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Изображение',
+    )
+    link = models.CharField(
+        max_length=200,
+        verbose_name='Ссылка',
+    )
+    is_menu = models.BooleanField(
+        default=True,
+        verbose_name='Показывать в меню?',
+    )
 
 
+# Главная страница каждого сайта
 class HomePage(Page):
     # определение дочерних страниц
     subpage_types = ['NewsIndexPage', 'NewsPostPage', 'ContactPage']
-    # максимальное кол-во создаваемых страниц
-    max_count = 2
 
     # поля в бд
     about = RichTextField(
@@ -125,8 +237,8 @@ class HomePage(Page):
         blank=True,
         null=True,
     )
-    service = RichTextField(
-        verbose_name='Услуги',
+    service_title = RichTextField(
+        verbose_name='Текст блока Услуги',
         features=['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul', 'hr', 'bold', 'italic', 'link', 'superscript', 'subscript', 'strikethrough', 'blockquote'],
         help_text='Введите текст',
         blank=True,
@@ -143,7 +255,8 @@ class HomePage(Page):
         upload_to = 'documents/',
         blank = True,
         null = True,
-        verbose_name = 'Буклет'
+        verbose_name = 'Буклет',
+        help_text='Если не приложен файл буклета, слайды отображаться не будут'
     )
     ya_map = models.CharField(
         max_length=255,
@@ -157,13 +270,21 @@ class HomePage(Page):
     # вкладка содержимое
     content_panels = Page.content_panels + [
         FieldPanel('about'),
-        FieldPanel('service'),
+        FieldPanel('service_title'),
+        MultiFieldPanel(
+            [
+                InlinePanel('services'),
+            ],
+            heading='Добавление услуг',
+        ),
         FieldPanel('social'),
         MultiFieldPanel(
-            [InlinePanel('slides'),],
+            [
+                InlinePanel('slides'),
+                FieldPanel('book'),
+            ],
             heading='Слайды',
         ),
-        FieldPanel('book'),
         FieldPanel('ya_map')
     ]
 
@@ -173,6 +294,19 @@ class NewsIndexPage(Page):
     subpage_types = ['NewsPostPage', 'NewsIndexPage']
     # определение родительских страниц
     parent_page_types = ['HomePage', 'NewsIndexPage']
+    
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Изображение',
+    )
+    
+    content_panels = Page.content_panels + [
+        FieldPanel('image'),
+    ]
     
     class Meta:
         verbose_name = "Страница категории"
@@ -184,20 +318,21 @@ class NewsPostPage(Page):
     subpage_types = []
     # определение родительских страниц
     parent_page_types = ['HomePage', 'NewsIndexPage']
-    
+
     body = StreamField(
         [
             ('rtfblock', RichTextBlock(
-                features=['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul', 'hr', 'bold', 'italic', 'link', 'superscript', 'subscript', 'strikethrough', 'blockquote'],
+                features=['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul', 'hr', 'br', 'bold', 'italic', 'link', 'superscript', 'subscript', 'strikethrough', 'blockquote'],
                 label='Текст',
                 help_text='Введите текст',
                 )),
             ('documentblock', DocumentChooserBlock(label='Документ')),
             ('imgblock', ImageChooserBlock(label='Изображение', template='blocks/img_block.html')),
         ],
-        block_counts={
-            'imgblock': {'max_num': 1},
-        },
+        # block_counts={
+        #     'imgblock': {'max_num': 1},
+        # },
+        use_json_field=True,
         verbose_name='Добавление блоков',
     )
     created_at = models.DateField(
@@ -206,7 +341,7 @@ class NewsPostPage(Page):
     )
     
     content_panels = Page.content_panels + [
-        StreamFieldPanel('body'),
+        FieldPanel('body'),
     ]
     promote_panels = Page.promote_panels + [
         FieldPanel('created_at'),
@@ -221,7 +356,7 @@ class NewsPostPage(Page):
 
         if self.slug:
             self.slug = slugify(self.slug)
-            
+
 
 class FormField(AbstractFormField):
     page = ParentalKey(
@@ -254,7 +389,7 @@ class ContactPage(WagtailCaptchaEmailForm):
     # определение родительских страниц
     parent_page_types = ['HomePage']
     # максимальное кол-во создаваемых страниц
-    max_count = 1
+    # max_count = 1
     
     landing_page_template = 'home/contact_page_landing.html',
     

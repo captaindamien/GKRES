@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+    <section id="contact">
+        <div class="overlay"></div>
+        <div class="row narrow section-intro with-bottom-sep animate-this">
+            <div class="col-twelve">
+                <p class="lead">{{ page.intro|richtext }}</p>
+            </div> 
+        </div>
+        <div class="row contact-content">
+            <div class="col-seven tab-full animate-this">
+                <h5>Напишите нам</h5>
+
+                <form action="{% pageurl page %}" method="post">
+                    {% csrf_token %}
+
+                    {% for field in form.visible_fields %}
+                        <div class="form-field">
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+            
+                    <button type="submit" class="submitform">Отправить</button>
+                </form>
+            </div>
+
+            <div class="col-four tab-full contact-info end animate-this">
+                <h5>Контактная информация</h5>
+                <div class="cinfo">
+                    <p>{{ page.contacts|richtext }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

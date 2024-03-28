@@ -1,7 +1,8 @@
 {% load base_tags wagtailcore_tags %}
 
-<ul>
-    {% for child in menuitems_children %}
-        <a href="{% pageurl child %}">{{ child.title }}</a><br>
-    {% endfor %}
-</ul>
+{% for child in menuitems_children %}
+    <div class="dropdown-item">
+        <i class="fa fa-code-fork"></i>
+        <a href="{% pageurl child %}" class="menu-link">{{ child.title }}</a>
+    </div>
+{% endfor %}

@@ -1,114 +1,55 @@
 {% load base_tags wagtailcore_tags %}
 {% get_site_root as site_root %}
 
-<!-- header 
-================================================== -->
-{% block head %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<div class="header-menu">
+    <ul class="menu-list">
+        <li class="menu-item"><a href="/" class="menu-link">Главная</a></li>
 
-    <script>
-        $(function(){
-            $('.disc-toggle').click(function(){
-                $('.disc-nav-toggle').toggleClass('open', 1000, "easeOutSine" );
-            });
-            $('.lk-toggle').click(function(){
-                $('.lk-nav-toggle').toggleClass('open', 1000, "easeOutSine" );
-            });
-        });
-    </script>
-{% endblock %}
+        {% for menuitem in menuitems %}
+            {% if menuitem.show_dropdown %}
+                <li class="menu-item">
+                    <div class="dropdown-container">
+                        <a href="{% pageurl menuitem %}" class="menu-link" id="btn">
+                            {{ menuitem.title }}
+                        </a>
+                        <a href="##" class="dropdown-link">
+                            <i class="fa fa-bars fa-dropdown" id="arrow"></i>
+                        </a>
+                    </div>
+                    <div class="dropdown" id="dropdown">
+                        {% top_menu_children parent=menuitem %}
+                    </div>
+                </li>
+            {% else %}
+                <li class="menu-item"><a href="{% pageurl menuitem %}" class="menu-link">{{ menuitem.title }}</a></li>
+            {% endif %}
+        {% endfor %}
 
-<header>
-    <a id="header-menu-trigger" href="#0">
-        <span class="header-menu-text">Меню</span>
-        <span class="header-menu-icon"></span>
-    </a> 
+        {% for service in services %}
+            {% if service.is_menu %}
+                <li class="menu-item"><a href="{{ service.link }}" class="menu-link">{{ service.title }}</a></li>
+            {% endif %}
+        {% endfor %}
 
-    <nav id="menu-nav-wrap">
-        {% if request.user %}
-            {{ request.user.first_name }} {{ request.user.last_name }}
+        {% if request.user.is_authenticated %}
+            <li class="menu-item">
+                <a href="{% url 'tennis:tennis-tournaments' %}" class="menu-link">
+                    <span class="icon">
+                        <i class="icon-trophy"></i>
+                    </span>
+                    Теннисный турнир
+                </a>
+            </li>
         {% endif %}
 
-        <a href="#0" class="close-button" title="close"><span>Закрыть</span></a>
+        <!-- {% if request.user.is_authenticated %}
+            <li class="menu-item">
+                <a href="/admin" class="menu-link ">{{ request.user.first_name }} {{ request.user.last_name }}</a>
+                <a href="/admin/logout" class="menu-link close"><i class="fa fa-window-close"></i></a>
+            </li>
+        {% else %}
+            <li class="menu-item"><a href="/admin/login" class="menu-link">Личный кабинет</a></li>
+        {% endif %} -->
 
-        <ul class="nav-list">
-            <li><a href="/">Главная</a></li>
-
-            {% for menuitem in menuitems %}
-                {% if menuitem.show_dropdown %}
-                    <li><a href="{% pageurl menuitem %}">{{ menuitem.title }}</a></li>
-                    {% top_menu_children parent=menuitem %}
-                {% else %}
-                    <li><a href="{% pageurl menuitem %}">{{ menuitem.title }}</a></li>
-                {% endif %}
-            {% endfor %}
-	    
-	        <br>
-
-            <li style="color: rgb(186, 186, 186)"><a href="##" class="disc-toggle">Раскрытие информации</a></li>
-            <ul class="disc-nav-toggle">
-                <li>
-                    <a href="http://ri.gkres.so-online.ru/">
-                    <span class="icon">
-                            &nbsp;&nbsp;
-                            <i class="icon-tag">&nbsp;</i>
-                        </span>
-                    Магадан
-                    </a>
-                </li>
-                <li>
-                    <a href="https://gkres-sg.so-online.ru/disclosure">
-                    <span class="icon">
-                            &nbsp;&nbsp;
-                            <i class="icon-tag">&nbsp;</i>
-                    </span>
-                    Хабаровский край
-                    </a>
-                </li>
-            </ul>
-
-            <li style="color: rgb(186, 186, 186)"><a href="##" class="lk-toggle">Личные кабинеты</a></li>
-            <ul class="lk-nav-toggle">
-                <li>
-                    <a href="https://gkres.so-online.ru/tso/requests">
-                    <span class="icon">
-                            &nbsp;&nbsp;
-                            <i class="icon-tag">&nbsp;</i>
-                        </span>
-                    Магадан
-                    </a>
-                </li>
-                <li>
-                    <a href="https://gkres-sg.so-online.ru/">
-                    <span class="icon">
-                            &nbsp;&nbsp;
-                            <i class="icon-tag">&nbsp;</i>
-                    </span>
-                    Хабаровский край
-                    </a>
-                </li>
-            </ul>
-
-            <li><a href="https://gkres.so-online.ru/calculator">Калькулятор стоимости ТП</a></li>
-            <li><a href="https://disk.yandex.ru/d/S2bEqAkbTwrNmA">Схемы сетевого комплекса</a></li>
-            
-            <br>
-            {% if request.user.is_authenticated %}
-                <li>
-                    <a href="{% url 'tennis:tennis-tournaments' %}">                    
-                        <span class="icon">
-                            <i class="icon-trophy"></i>
-                        </span>	
-                        Теннисный турнир
-                    </a>
-                </li>
-            {% endif %}
-
-            <br>
-            
-            <li><a href="http://old.gkres.ru">Старая версия сайта</a></li>
-        </ul>
-    </nav>
-</header>
+    </ul>
+</div>

@@ -1,38 +1,27 @@
 {% extends 'base.html' %}
-{% load wagtailcore_tags %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
-{% block content %}
-    <section id="news_index">
-        <div class="overlay"></div>
-        <div class="gradient-overlay"></div>
-
-        <div class="row narrow section-intro with-bottom-sep animate-this">
-            <div class="col-full">
-                <div class="lead">
-                    <h1>{{ page.title }}</h1>
-                </div>
-            </div>
+{% block content %}   
+    <div class="content-container">
+        <div class="carousel">
+            <div class="overlay"></div>
+            <div class="carousel-text"><h4>{{ page.title }}</h4></div>
         </div>
+        <div class="card-container flex-row">
+            {% for news in page.get_children %}
+                {% image page.image format-webp as card_image %}
 
-        <div class="row news_index-content">
-            <div class="news_index-list block-1-2 block-tab-full group">
-                {% for news in page.get_children %}
-                    {% if news.live %}
-                        <div class="bgrid service-item animate-this">
-                            <a href="{% pageurl news %}">
-                                <span class="icon">
-                                    <i class="icon-files"></i>
-                                    <!-- <img src="../../../static/images/logo.png" alt="" style="width: 15%;"> -->
-                                </span>	              
-                                <div class="service-content">
-                                    <h3 class="h05">{{ news.title }}</h3>
-				    <a href="{% pageurl news %}">Перейти к новости</a>
-                                </div>
-                            </a>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div> 			
-    </section>                                  
+                {% if news.live %}
+                    <div class="card-content small-card">
+                        <a href="{% pageurl news %}" class="card-link">
+                            <div class="card-image image-tint" style="background-image: url({{ card_image.url }});"></div>
+                            <div class="card">
+                                <p>{{ news.title }}</p>          
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
