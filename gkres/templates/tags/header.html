@@ -1,0 +1,13 @@
+{% load static wagtailcore_tags wagtailimages_tags base_tags %}
+
+{% get_site_root as site_root %}
+
+<div class="header" id="header">
+    <div class="header-logo">
+        <a href="/">
+            <img src="{% static 'images/logo.png' %}" alt="logo.png" class="logo">
+        </a>
+    </div>
+    {% top_menu parent=site_root calling_page=self %}
+</div>
+

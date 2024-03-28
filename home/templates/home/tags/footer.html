@@ -1,9 +1,0 @@
-{% load wagtailcore_tags %}
-
-{% for foo in footer %}
-    {% if footer %}
-        <div class="footer-bottom">
-            {{ foo.bodytext|richtext }}           	
-        </div>
-    {% endif %}
-{% endfor %}

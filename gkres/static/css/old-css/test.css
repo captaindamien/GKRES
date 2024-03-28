@@ -1,0 +1,13 @@
+.first_bg {
+    position:absolute;
+    left:0;
+    top : 0;
+    width : 100%;
+    min-height : 100%;
+    background: url('../images/Russia-map-top-2240x1471.jpg') repeat;
+   }
+   .second_bg {
+    width : 100%;
+    min-height : 100%;
+    background:url('../images/maprus_magadan.webp'); /* may be transparent, but why add a background then ;-) */
+   }

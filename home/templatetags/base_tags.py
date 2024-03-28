@@ -1,17 +1,23 @@
-from home.models import Footer, Contacts, HomePage
+from home.models import Footer, Contacts, HomePage, HomeService
 from django import template
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 register = template.Library()
 
 # ----- snippets -----
 
-@register.inclusion_tag('home/tags/footer.html', takes_context=True)
+@register.inclusion_tag('../../gkres/templates/tags/footer.html', takes_context=True)
 def footer_tag(context):
     return {
         'request': context['request'],
         'footer': Footer.objects.all(),
+    }
+    
+@register.inclusion_tag('../../gkres/templates/tags/header.html', takes_context=True)
+def header_tag(context):
+    return {
+        'request': context['request'],
     }
 
 
@@ -48,10 +54,15 @@ def top_menu(context, parent, calling_page=None):
         menuitem.show_dropdown = has_menu_children(menuitem)
         menuitem.active = (calling_page.url_path.startswith(menuitem.url_path)
                            if calling_page else False)
+
+    # определение корневой страницы для корректного отображения в меню
+    root_page = get_site_root(context)
+    
     return {
         'calling_page': calling_page,
         'menuitems': menuitems,
         'request': context['request'],
+        'services': HomeService.objects.filter(service_id=root_page.id),    # передача пунктов таблицы HomeService в меню
     }
     
 
