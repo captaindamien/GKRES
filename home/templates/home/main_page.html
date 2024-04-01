@@ -5,6 +5,10 @@
 
     <link rel="stylesheet" href="{% static 'css/mainpage.css' %}">
     <link rel="stylesheet" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 {% endblock %}
 
@@ -38,8 +42,9 @@
                 <a class="btn btn-4 btn-sep btn-primary icon-map" id="map-link">На интерактивной карте</a>
 
                 <h3>Или перейдите по прямой ссылке</h3>
-                <a href="http://parallels.cn:8000/" class="btn btn-4 btn-sep icon-marker" style="text-decoration: none">Магаданская область</a>
-                <a href="http://parallels.ru:8000/" class="btn btn-4 btn-sep icon-marker" style="text-decoration: none">Хабаровский край</a>
+                {% for region in page.regions.all %}
+                    <a href="{{ region.reg_link }}" class="btn btn-4 btn-sep icon-marker" style="text-decoration: none">Магаданская область</a>
+                {% endfor %}
             </div>
         </div>
         <div class="overlay" id="overlay"></div>
