@@ -1,0 +1,90 @@
+@font-face {
+    font-family: 'SF-Pro';
+    src: local('SF-Pro'),
+    url("../fonts/SanFranciscoProDisplay/SF-Pro-Display-Light.ac5237052941.otf") format('opentype');
+}
+
+:root {
+    /* fonts */
+    --font-family: 'Alumni', sans-serif;
+    /* font-size */
+    --font-size-h1: 80px;
+    --font-size-h3: 40px;
+    --font-size-h4: 30px;
+    --font-size-menu: 18px;
+    --font-size-p: 24px;
+    /* colors */
+    /*--color-primary: #202020;*/
+    --color-primary: #1e1e1e;
+    /*--color-header: rgba(50, 50, 50);*/
+    --color-header: #313131;
+    --color-border: #2e2e2e;
+    --color-title: #DEDEDE;
+    --color-text: #959595;
+    --color-button: #9D9D9D;
+    --color-close: #ba3238;
+    --color-map: rgb(123, 28, 28);
+    /* shadows */
+    --shadow: rgba(221, 221, 221, 0.2) 0px 4px 12px;
+    /* elements-size */
+    --header-size: 80px;
+    /* radius */
+    --radius: 0 0 20px 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family);
+    box-sizing: border-box;
+}
+
+html,
+body {
+    background: var(--color-primary);
+    height: 100vh;
+}
+
+h1 {
+    font-size: var(--font-size-h1);
+    color: var(--color-title);
+}
+
+h3 {
+    font-size: var(--font-size-h3);
+    color: var(--color-title);
+}
+
+h4 {
+    font-size: var(--font-size-h3);
+    color: var(--color-title);
+}
+
+p {
+    font-size: var(--font-size-p);
+    color: var(--color-title);
+}
+
+@media screen and (max-width: 1000px) {
+    h1 {
+        font-size: 64px;
+    }
+
+    h3 {
+        font-size: 32px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+}
+
+@media screen and (max-width: 400px) {
+    h1 {
+        font-size: 50px;
+    }
+
+    h3 {
+        font-size: 26px;
+    }
+}

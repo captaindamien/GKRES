@@ -43,7 +43,7 @@
 
                 <h3>Или перейдите по прямой ссылке</h3>
                 {% for region in page.regions.all %}
-                    <a href="{{ region.reg_link }}" class="btn btn-4 btn-sep icon-marker" style="text-decoration: none">Магаданская область</a>
+                    <a href="{{ region.reg_link }}" class="btn btn-4 btn-sep icon-marker" style="text-decoration: none">{{ region.reg_title  }}</a>
                 {% endfor %}
             </div>
         </div>

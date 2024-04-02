@@ -13,7 +13,8 @@ DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: define the correct hosts in production!
-ALLOWED_HOSTS = ["gkres.ru", "www.gkres.ru"]
+ALLOWED_HOSTS = ['gkres.ru']
+CSRF_TRUSTED_ORIGINS = ['https://gkres.ru']
 
 try:
     from .local import *

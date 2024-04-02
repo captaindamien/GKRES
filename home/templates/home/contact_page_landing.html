@@ -2,20 +2,21 @@
 {% load wagtailcore_tags %}
 
 {% block content %}
-    <section id="news_index">
-        <div class="overlay"></div>
-        <div class="gradient-overlay"></div>
-
-        <div class="row narrow section-intro with-bottom-sep animate-this">
-            <div class="col-full">
-                <div class="lead">
-                    <h1>{{ self.thank_you_text|richtext }}</h1>
+    <div class="content-container">
+        <div class="carousel">
+            <div class="overlay"></div>
+            <div class="carousel-text">{{ page.about | richtext }}</div>
+        </div>
+        <div class="card-container flex-row">
+            <div class="card-content big-card">
+                <div class="card full-border">
+                    <h1>{{ self.thank_you_text | richtext }}</h1>
                     <p>Вы будете перенаправлены на главную страницу<br>Если это не произошло, нажмите на ссылку ниже</p>
                     <a href="/">Перейти на главную</a>
                 </div>
             </div>
-        </div>			
-    </section> 
+        </div>
+    </div>
 {% endblock %}
 
 <!-- {% block js %}

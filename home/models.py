@@ -93,6 +93,13 @@ class Region(Orderable):
         null=True,
         on_delete=models.CASCADE,
         related_name='regions',
+        default=' ',
+    )
+    reg_title = models.CharField(
+        max_length=50,
+        blank=False,
+        null=False,
+        verbose_name='Название региона',
     )
     reg_id = models.CharField(
         max_length=25,
