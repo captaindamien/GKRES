@@ -9,13 +9,13 @@
     </form>
     {% if request.user.is_authenticated %}
         <div class="account">
-            <a href="http://parallels.com:8000/admin/logout/?next=/">
+            <a href="https://lk.gkres.ru/admin/logout/?next=/">
                 <p>{{ request.user.first_name }} {{ request.user.last_name }}</p>
             </a> 
         </div>
     {% else %}
         <div class="account">
-            <a href="http://parallels.com:8000">
+            <a href="https://lk.gkres.ru">
                 <i class="fa fa-user-circle"></i>
             </a> 
         </div>
