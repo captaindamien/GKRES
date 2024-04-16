@@ -4,7 +4,7 @@
 
 <div class="user_header">
     <form action="{% url 'search' %}" method="get" class="search">
-        <input type="text" name="query" class="search-field" {% if search_query %} value="{{ search_query }}"{% endif %}>
+        <input name="query" class="search-field" {% if search_query %} value="{{ search_query }}"{% endif %}>
         <button class="search-button"><i class="fa fa-search"></i></button>
     </form>
     {% if request.user.is_authenticated %}
