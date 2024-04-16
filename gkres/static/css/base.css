@@ -153,6 +153,13 @@ a {
     overflow-x: hidden;
 }
 
+.header-icons {
+    display: flex;
+    flex-direction: row;
+    align-items: top;
+    justify-content: space-between;
+}
+
 .header-logo {
     display: flex;
     flex-direction: row;
@@ -314,10 +321,82 @@ a {
     }
 }
 
+.user_header {
+    padding: 10px 20px 20px 20px;
+    height: 100px;
+    z-index: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 1px solid var(--color-border);
+}
+
+.search {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.search-field {
+    height: 60px;
+    background-color: #262626;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 20px 10px;
+    color: var(--color-title);
+    flex-grow: 2;
+}
+
+.search-field:focus {
+    outline: 2px solid var(--color-button);
+    color: var(--color-text);
+}
+
+.search-button {
+    background-color: #262626;
+    border: 2px solid var(--color-border);
+    color: var(--color-primary);
+    padding: 20px 20px;
+    margin-left: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.search-button:hover {
+    background-color: var(--color-button);
+}
+
+.account a {
+    cursor: pointer;
+    font-size: 50px;
+    color: var(--color-border);
+}
+
+.account p {
+    color: var(--color-border);
+    font-size: 25px;
+}
+
+.account p:hover {
+    color: var(--color-close);
+}
+
+.account a:hover {
+    color: var(--color-text);
+}
+
+@media screen and (max-width: 1040px) {
+    .user_header {
+        display: none;
+    }
+}
+
 .content-container {
-    width: 100%;
+    min-width: 100%;
     min-height: 100%;
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     overflow-x: hidden;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -329,6 +408,10 @@ a {
 .content-container::-webkit-scrollbar {
     width: 0;
     height: 0;
+}
+
+.content-wrapper {
+    width: 100%;
 }
 
 .text-content {
@@ -523,6 +606,7 @@ a {
 @media screen and (max-width: 1040px) {
     .carousel {
         height: 300px;
+        margin-top: 20px;
     }
     .card-container {
         justify-content: center;
@@ -577,15 +661,26 @@ a {
     margin-top: 20px;
 }
 
+.form-field label {
+    font-size: 20px;
+    color: var(--color-text);
+    margin: 5px;
+}
+
 .form-field input {
     width: 100%;
     height: 60px;
     background-color: var(--color-primary);
-    border: 3px solid var(--color-border);
+    border: 2px solid var(--color-border);
     border-radius: 10px;
     margin-bottom: 20px;
     padding: 20px 10px;
     color: var(--color-title)
+}
+
+.form-field input:focus {
+    outline: 2px solid var(--color-button);
+    color: var(--color-text);
 }
 
 .form-field textarea {
@@ -593,11 +688,47 @@ a {
     width: 100%;
     height: 150px;
     background-color: var(--color-primary);
-    border: 3px solid var(--color-border);
+    border: 2px solid var(--color-border);
     border-radius: 10px;
     margin-bottom: 20px;
     padding: 20px 10px;
     color: var(--color-title)
+}
+
+.form-field textarea:focus {
+    outline: 2px solid var(--color-button);
+    color: var(--color-text);
+}
+
+.form-field select {
+    width: 100%;
+    height: 60px;
+    background-color: var(--color-primary);
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 20px 10px;
+    color: var(--color-title);
+
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    appearance:none;
+}
+
+.form-field option {
+    width: 100%;
+    height: 60px;
+    background-color: var(--color-primary);
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 20px 10px;
+    color: var(--color-title);
+}
+
+.form-field select:focus {
+    outline: 2px solid var(--color-button);
+    color: var(--color-text);
 }
 
 .form button {
@@ -606,7 +737,7 @@ a {
     background-color: #d4d4d4;
     color: var(--color-primary);
     padding: 20px 20px;
-    border: var(--color-header) 1px solid;
+    border: var(--color-header) 2px solid;
     border-radius: 10px;
     text-align: center;
     width: 100%;

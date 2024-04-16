@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static wagtailcore_tags wagtailimages_tags base_tags %}
+
+{% block content %}
+    <div class="content-container">
+        <div class="carousel">
+            <div class="overlay"></div>
+            <div class="carousel-text"><h3>{{ page.welcome_text }}</h3></div>
+        </div>
+        <div class="card-container flex-row">
+            {% for service in page.services.all %}
+                {% image service.image format-webp as service_image %}
+                <div class="card-content {% if not service.block_size %} small-card {% else %} big-card {% endif %}">
+                    <a href="{{ service.link }}" class="card-link">
+                        {% if service.image %}
+                            <div class="card-image image-tint" style="background-image: url({{ service_image.url }});"></div>
+                            <div class="card">
+                                <p><i class="fa {{ service.icon }}"></i>{{ service.title }}</p>          
+                            </div>
+                        {% else %}
+                            <div class="card full-border">
+                                <p><i class="fa {{ service.icon }}"></i>{{ service.title }}</p>          
+                            </div>
+                        {% endif %}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

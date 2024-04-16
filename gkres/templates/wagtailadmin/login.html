@@ -1,5 +1,11 @@
 {% extends "wagtailadmin/login.html" %}
+{% load static %}
+
 
 {% block branding_login %}
     Вход для сотрудников
+{% endblock %}
+
+{% block branding_logo %}
+    <img src="{% static 'images/logo.png' %}" alt="Custom Project" width="80" style="margin: 20px 0 0 calc(50% - 40px)"/>
 {% endblock %}

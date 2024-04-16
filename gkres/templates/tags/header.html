@@ -3,11 +3,12 @@
 {% get_site_root as site_root %}
 
 <div class="header" id="header">
-    <div class="header-logo">
-        <a href="/">
+    <div class="header-icons">
+        <a href="/" class="heder-logo">
             <img src="{% static 'images/logo.png' %}" alt="logo.png" class="logo">
         </a>
     </div>
+
     {% top_menu parent=site_root calling_page=self %}
 </div>
 

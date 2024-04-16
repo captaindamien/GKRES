@@ -1,4 +1,5 @@
 from home.models import Footer, Contacts, HomePage, HomeService
+from account.models import AccountServices
 from django import template
 
 from wagtail.models import Site
@@ -13,9 +14,17 @@ def footer_tag(context):
         'request': context['request'],
         'footer': Footer.objects.all(),
     }
-    
+
+ 
 @register.inclusion_tag('../../gkres/templates/tags/header.html', takes_context=True)
 def header_tag(context):
+    return {
+        'request': context['request'],
+    }
+
+
+@register.inclusion_tag('../../gkres/templates/tags/user_header.html', takes_context=True)
+def user_header_tag(context):
     return {
         'request': context['request'],
     }
@@ -62,7 +71,8 @@ def top_menu(context, parent, calling_page=None):
         'calling_page': calling_page,
         'menuitems': menuitems,
         'request': context['request'],
-        'services': HomeService.objects.filter(service_id=root_page.id),    # передача пунктов таблицы HomeService в меню
+        'home_services': HomeService.objects.filter(service_id=root_page.id),    # передача пунктов таблицы HomeService в меню
+        'account_services': AccountServices.objects.filter(service_id=root_page.id),
     }
     
 

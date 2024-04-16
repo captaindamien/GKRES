@@ -1,29 +1,24 @@
 from email.policy import default
 from re import template
 from tabnanny import verbose
-from django.db import models
 from datetime import date
+from slugify import slugify
 
+from django.db import models
+
+from modelcluster.fields import ParentalKey
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.models import Page, Orderable
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel, InlinePanel
 from wagtail.fields import RichTextField, StreamField
-
 from wagtail.blocks import RichTextBlock
+from wagtail.search import index
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.documents.blocks import DocumentChooserBlock
-
 from wagtail.snippets.models import register_snippet
-
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
-from wagtail.contrib.forms.forms import FormBuilder
-
 from wagtailcaptcha.models import WagtailCaptchaEmailForm
 from wagtailcaptcha.forms import WagtailCaptchaFormBuilder
-from wagtailcaptcha.models import WagtailCaptchaForm
-
-from modelcluster.fields import ParentalKey
-
-from slugify import slugify
 
 
 @register_snippet
@@ -229,11 +224,15 @@ class HomeService(Orderable):
         default=True,
         verbose_name='Показывать в меню?',
     )
+    
+    search_fields = Page.search_fields + [
+        index.SearchField('title'),
+    ]
 
 
 # Главная страница каждого сайта
-class HomePage(Page):
-    # определение дочерних страниц
+class HomePage(RoutablePageMixin, Page):
+    parent_page_types = ['wagtailcore.Page']
     subpage_types = ['NewsIndexPage', 'NewsPostPage', 'ContactPage']
 
     # поля в бд

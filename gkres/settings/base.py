@@ -35,6 +35,7 @@ CSRF_COOKIE_DOMAIN = None
 INSTALLED_APPS = [
     # подключение приложений
     "home",
+    'account',
     "search",
     "tennis",
     "auto_penalty",

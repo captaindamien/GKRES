@@ -1,0 +1,74 @@
+/* Стиль модального окна */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.3);
+}
+
+/* Стиль контента модального окна */
+.modal-content {
+    background-color: #1e1e1e;
+    margin: 10% auto;
+    padding: 40px;
+    border: none;
+    width: 50%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    color: #ffffff;
+}
+
+.modal-content ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.modal-content ul li {
+    list-style-type: none;
+}
+
+.close {
+    color: #777;
+    float: right;
+    font-size: 28px;
+    font-weight: normal;
+}
+
+.close:hover,
+.close:focus {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.sheet-button {
+    background-color: #008cba;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+}
+
+.sheet-button:hover {
+    background-color: #005f8b;
+}
+
+@media screen and (max-width: 1040px) {
+    .modal-content {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
+    .modal-content ul {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

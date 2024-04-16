@@ -6,33 +6,44 @@
 {% block title %}Search{% endblock %}
 
 {% block content %}
-<h1>Search</h1>
+    <div class="content-container">
+        <div class="carousel">
+            <div class="overlay"></div>
+            <div class="carousel-text">
+                <h3>
+                    {% if search_results %}
+                        Поиск по сайту
+                    {% elif search_query %}
+                        Поиск не дал результатов
+                    {% endif %}
+                </h3>
+            </div>
+        </div>
+        <div class="card-container flex-row">
+            <div class="card-content big-card">
+                    {% for result in search_results %}
+                        <div class="card-content big-card">
+                            <a href="{% pageurl result %}" class="card-link">
+                                <div class="card full-border" style="margin-bottom: 20px;">
+                                    <p>{{ result }}</p>
 
-<form action="{% url 'search' %}" method="get">
-    <input type="text" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
-    <input type="submit" value="Search" class="button">
-</form>
+                                    {% if result.search_description %}
+                                        {{ result.search_description }}
+                                    {% endif %}    
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+            
+                    {% if search_results.has_previous %}
+                        <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">Previous</a>
+                    {% endif %}
+            
+                    {% if search_results.has_next %}
+                        <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Next</a>
+                    {% endif %}
+            </div>
+        </div>
+    </div>
 
-{% if search_results %}
-<ul>
-    {% for result in search_results %}
-    <li>
-        <h4><a href="{% pageurl result %}">{{ result }}</a></h4>
-        {% if result.search_description %}
-        {{ result.search_description }}
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
-
-{% if search_results.has_previous %}
-<a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">Previous</a>
-{% endif %}
-
-{% if search_results.has_next %}
-<a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Next</a>
-{% endif %}
-{% elif search_query %}
-No results found
-{% endif %}
 {% endblock %}

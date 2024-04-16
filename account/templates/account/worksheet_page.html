@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static wagtailcore_tags wagtailimages_tags base_tags %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/worksheet.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="content-container">
+        <div class="carousel">
+            <div class="overlay"></div>
+            <div class="carousel-text"><h3>{{ page.title }}</h3></div>
+        </div>
+
+        <div class="form">
+            <form action="{% pageurl page %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+    
+                {% for field in form.visible_fields %}
+                    <div class="form-field">
+                        <label for="{{ field.name }}">{{ field.help_text }}</label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+        
+                <button type="submit" class="submitform">Отправить</button>
+            </form>
+
+            <div id="sheetModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Выберите лист</h2>
+                    <ul id="sheetList"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script>
+        var ul = document.getElementById("sheetList");
+        var li = ul.getElementsByTagName("li");
+        var numItems = li.length;
+        var css = document.createElement("style");
+        css.type = "text/css";
+        css.innerHTML = "ul { column-count: " + Math.round(numItems/2) + "; }";
+        document.body.appendChild(css);
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Получаем текущий месяц и год
+            var date = new Date();
+            var currentMonth = date.getMonth() + 1; // getMonth() возвращает месяц от 0 до 11, поэтому добавляем 1
+            var currentYear = date.getFullYear();
+        
+            // Находим все input элементы типа number на странице
+            var numberInputs = document.querySelectorAll('input[type="number"]');
+        
+            // Проверяем, есть ли хотя бы два таких элемента
+            if (numberInputs.length >= 2) {
+                // Устанавливаем значение первого input на текущий месяц
+                numberInputs[0].value = currentMonth;
+                // Устанавливаем значение второго input на текущий год
+                numberInputs[1].value = currentYear;
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var fileInput = document.querySelector('input[type="file"]');
+            var modal = document.getElementById("sheetModal");
+            var span = document.getElementsByClassName("close")[0];
+            var sheetListUl = document.getElementById("sheetList");
+            var firstTextInput = document.querySelector('input[type="text"]');
+        
+            // Когда пользователь кликает на <span> (x), закрыть модальное окно
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+        
+            // Когда пользователь кликает в любом месте за пределами модального окна, закрыть его
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    var file = this.files[0];
+                    var reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        var data = new Uint8Array(e.target.result);
+                        var workbook = XLSX.read(data, {type: 'array'});
+                        
+                        var sheetNames = workbook.SheetNames;
+                        sheetListUl.innerHTML = ''; // Очистить предыдущий список
+                        
+                        sheetNames.forEach(function(name) {
+                            var button = document.createElement("button");
+                            button.textContent = name;
+                            button.type = "button"; // Указываем тип, чтобы предотвратить отправку формы при клике
+                            button.classList.add("sheet-button"); // Добавляем класс для стилизации, если необходимо
+                            button.onclick = function() {
+                                // При клике на кнопку, устанавливаем её значение в первый input[type="text"]
+                                firstTextInput.value = this.textContent;
+                                modal.style.display = "none"; // Закрываем модальное окно
+                            };
+                            var li = document.createElement("li"); // Создаем элемент списка для обертки кнопки
+                            li.appendChild(button); // Добавляем кнопку в элемент списка
+                            sheetListUl.appendChild(li); // Добавляем элемент списка в модальное окно
+                        });
+
+                        // Показываем модальное окно с выбором листа
+                        modal.style.display = "block";
+                    };
+                    
+                    reader.readAsArrayBuffer(file);
+                }
+            });
+        });
+    </script>
+{% endblock %}

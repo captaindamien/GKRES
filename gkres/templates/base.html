@@ -54,21 +54,21 @@
             <img src="https://mc.yandex.ru/watch/89905300" style="position:absolute; left:-9999px;" alt="" />
         </div>
     </noscript>
-    <!-- /Yandex.Metrika counter -->
 </head>
 <body>
     <div class="wrapper">
         {% header_tag %}
 
-        {% block content %}{% endblock %}
+        <div class="content-wrapper">
+            {% user_header_tag %}
+            {% block content %}{% endblock %}
+        </div>
 
         <i class="menu-icon fa fa-bars"></i>
         <i class="close-icon fa fa-times"></i>
     </div>
 
-    {% block js %}
-
-    {% endblock %}
+    {% block js %}{% endblock %}
 
     <script src="{% static 'js/base.js' %}"></script>
 </body>
