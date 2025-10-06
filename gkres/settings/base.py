@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'account',
     "search",
     "tennis",
-    "auto_penalty",
     
     # рекапча на форму
     'captcha',

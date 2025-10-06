@@ -22,8 +22,10 @@ APP_PATH = os.path.dirname(os.path.abspath(__file__))
 def parse_date(date_str):
     return datetime.strptime(date_str, '%d.%m.%Y')
 
+
 def delta_days(date1, date2):
     return (date2 - date1).days
+
 
 def group_consecutive_dates(data):
     sorted_data = sorted(data, key=lambda x: parse_date(x['date']))  # Сортировка по дате
@@ -98,12 +100,23 @@ def get_employee_info(
                 work_date_cell = ws.cell(row=date_row, column=i+1)
 
                 if work_status_cell.value == 'РВ':
+                    # Обрабатываем значение часов для корректного типа данных
+                    hours_value = work_hours_cell.value
+                    if hours_value is not None:
+                        try:
+                            # Если это строка, пытаемся преобразовать в число
+                            if isinstance(hours_value, str):
+                                hours_value = float(hours_value.replace(',', '.')) if ',' in hours_value else float(hours_value)
+                                hours_value = int(hours_value) if hours_value == int(hours_value) else hours_value
+                        except (ValueError, TypeError):
+                            hours_value = None
+                    
                     work_dates.append({
                         'date': f'{work_date_cell.value}.{month:02}.{year}',
-                        'hours': work_hours_cell.value
+                        'hours': hours_value
                     })
         
-        if work_dates != []:
+        if work_dates:
             grouped_dates = group_consecutive_dates(work_dates)
             employee_info['overwork'] = grouped_dates
         
@@ -198,7 +211,13 @@ def create_office_files(
                 
                 # проверка на корректность заполнения часов
                 if overwork['hours'] is not None:
-                    hour = numeral.get_plural(overwork['hours'], 'час, часа, часов')
+                    # Преобразуем в число, если это строка
+                    try:
+                        hours_value = float(overwork['hours']) if isinstance(overwork['hours'], str) else overwork['hours']
+                        hours_value = int(hours_value) if hours_value == int(hours_value) else hours_value
+                    except (ValueError, TypeError):
+                        hours_value = 0
+                    hour = numeral.get_plural(hours_value, 'час, часа, часов')
                 else:
                     hour = numeral.get_plural(0, 'час, часа, часов')
                     

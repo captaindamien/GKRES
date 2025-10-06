@@ -8,6 +8,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 from search import views as search_views
 
+
 urlpatterns = [
     path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),
@@ -15,7 +16,6 @@ urlpatterns = [
     path("search/", search_views.search, name="search"),
     path('', include('tennis.urls', namespace='tennis')),
 ]
-
 
 if settings.DEBUG:
     from django.conf.urls.static import static
